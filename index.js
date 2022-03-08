@@ -9,14 +9,18 @@ app.get('/mysql', (req, res) => {
     var con = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "162001"
+        password: "12345678"
     });
     con.connect(function (err) {
         if (err) {
             res.send('Connection error: ' + err);
             return;
         }
-        res.send('Connecting to the MySQL successfully');
+
+        con.query("SHOW DATABASES;", function (err, result) {
+            if (err) throw err;
+            res.send(result);
+        });
     });
 })
 app.listen(post, (req, res) => {
